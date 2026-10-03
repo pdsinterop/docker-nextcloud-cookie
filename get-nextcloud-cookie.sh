@@ -5,4 +5,4 @@ export OLD_SESSION=`cat header.txt |grep Set-Cookie |grep -v -E "(Host-nc|oc_ses
 export PAYLOAD="user=$USERNAME&password=$PASSWORD&rememberme=1&timezone=Europe/Amsterdam&timezone_offset=2&requesttoken=$REQUESTTOKEN"
 export COOKIE=`curl -b cookies.txt --silent --insecure --dump-header - -X POST "$SERVER_ROOT/login" -H "Content-Type: application/x-www-form-urlencoded" -H "Origin: $SERVER_ROOT"  --data "$PAYLOAD" |grep "Set-Cookie" |grep -v "$OLD_SESSION" |sort -u |sed -e 's/Set-Cookie: //'|sed -e 's/; .*/; /i' |tr -d '\r\n'`
 export COOKIE="$INIT_COOKIE$COOKIE"
-echo $COOKIE
+echo $SERVER_ROOT $USERNAME $PASSWORD $REQUESTTOKEN $INIT_COOKIE $OLD_SESSION $PAYLOAD $COOKIE 
